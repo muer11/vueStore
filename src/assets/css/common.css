@@ -1,0 +1,29 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	margin: 0 !important;
+	background: #f7f7f7;
+}
+a{
+	text-decoration: none;
+	color: #666;
+	font-size: 12px;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: normal;
+}
+h4{
+	text-align: left;
+}
+li{
+    list-style: none;
+}
+strong, em{
+	font-weight: normal;
+}
+em{
+	font-style: normal;
+}
+
