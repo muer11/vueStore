@@ -23,7 +23,7 @@
 
 <style lang="scss">
   .list{
-    padding-bottom: 50px;
+    padding-bottom: 0.5rem;
     a{
       display: block;
       width: 94%;

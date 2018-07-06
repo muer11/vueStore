@@ -78,13 +78,13 @@ export default {
         }
       }).then(function(res){
         if(res.data == 1){
-          vm.showNameError=false;
-          vm.isDisabled=false;
+          vm.showNameError = false;
+          vm.isDisabled = false;
           
         }else{
           vm.errMsg = "此账号不存在，请先注册后再登录";
           vm.isError = true;
-          vm.showNameError=true;
+          vm.showNameError = true;
         }
       }).catch(function(err){
         console.log(err);
@@ -107,10 +107,17 @@ export default {
           password: password.value
         }
       }).then(function(response){
+        console.log(response);
         if(response.data == 1){
           vm.isPswError=false;
           vm.showPasswordError = false;
           vm.isShow = true;
+          console.log(vm);
+          // console.log(vm.cookie.getCookie('token'));
+          // let token = vm.cookie.getCookie('token');
+          // let Base64 = require('js-base64').Base64;
+          // let str = token.split('.')[1];
+          // let user = JSON.parse(Base64.decode(str));
           setTimeout(function(){
             vm.isShow = false;
             vm.$router.push({path:"/"});

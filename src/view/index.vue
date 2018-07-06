@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import myfooter from '../components/myfooter.vue'
-export default{
-  name: 'index',
-  components: {
-    myfooter
+  import myfooter from '../components/myfooter.vue'
+  export default{
+    name: 'index',
+    components: {
+      myfooter
+    }
   }
-}
 </script>

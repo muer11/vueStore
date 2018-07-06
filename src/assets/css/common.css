@@ -2,9 +2,17 @@
 	margin: 0;
 	padding: 0;
 }
+html{
+	font-size: 100px;
+	height: 100%;
+}
 body{
 	margin: 0 !important;
 	background: #f7f7f7;
+	height: 100%;
+}
+#app{
+	height: 100%;
 }
 a{
 	text-decoration: none;
@@ -25,5 +33,26 @@ strong, em{
 }
 em{
 	font-style: normal;
+}
+i{
+	font-style: normal;
+}
+.text-center{
+	text-align: center;
+}
+.text-right{
+	text-align: right;
+}
+.pull-right {
+    float: right !important;
+}
+.pull-left{
+	float: left !important;
+}
+.red{
+	color: #f56667;
+}
+.green{
+	color: #48d2a0;
 }
 

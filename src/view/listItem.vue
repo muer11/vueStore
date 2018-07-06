@@ -65,117 +65,117 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
  .red {
     color: #f56667;
  }
- #productCategory {
+ #productCategory{
     width: 100%;
-    height: 40px;
+    height: 0.4rem;
     overflow: hidden;
     background: #fff;
     position: relative;
-  }
- .productCategory {
-    position: absolute;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
- .productCategory li {
-    float: left;
-    height: 40px;
-    line-height: 40px;
-    padding: 0 10px;
-    background: #fff;
- }
- .productCategory a {
-    display: block;
-    color: #666;
-    font-size: 14px;
-    vertical-align: middle;
- }
- .clicked{
-    color: #48d2a0 !important;
+    .productCategory{
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      li{
+        float: left;
+        height: 0.4rem;
+        line-height: 0.4rem;
+        padding: 0 0.1rem;
+        background: #fff;
+        a{
+          display: block;
+          color: #666;
+          font-size: 14px;
+          vertical-align: middle;
+        }
+        .clicked{
+            color: #48d2a0 !important;
+        }
+      }
+    }
  }
  .listAll {
    width: 100%;
    overflow: hidden;
- }
- .listAll .col-xs-6 {
-    float: left;
-    width: 40%;
-    margin: 10px 2% 0;
-    padding: 3%;
-    background-color: #fff;
-    -webkit-box-shadow: 0 1px 3px #ccc;
-    -moz-box-shadow: 0 1px 3px #ccc;
-    box-shadow: 0 1px 3px #ccc;
-    border-radius: 4px;
- }
- .listAll .col-xs-6 h4{
-    float: left;
-    width: 100%;
-    color: #333;
-    font-size: 14px;
-    line-height: 16px;
-    margin: 4px 0 0;
- }
- .listAll .col-xs-6 strong{
-    display: inline-block;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 4px;
-    float: left;
- }
- .listAll .col-xs-6 img{
-   width: 100%;
- }
- .listAll .col-xs-6 .basket {
-    background: url(http://www.joyingbike.com/resources/mobile/shop/images/cartClicked.png) center top no-repeat;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    background-size: cover;
-    float: right;
-    margin: 4px 8px;
- }
- .infinite-scroll-tips {
-    width: 100%;
-    height: 30px;
-    line-height: 40px;
-    clear: both;
-    color: #cccccc;
-    font-size: 12px;
-    text-align: center;
-    margin-bottom: 70px;
+    .col-xs-6 {
+      float: left;
+      width: 40%;
+      margin: 0.1rem 2% 0;
+      padding: 3%;
+      background-color: #fff;
+      -webkit-box-shadow: 0 1px 3px #ccc;
+      -moz-box-shadow: 0 1px 3px #ccc;
+      box-shadow: 0 1px 3px #ccc;
+      border-radius: 4px;
+      h4{
+        float: left;
+        width: 100%;
+        color: #333;
+        font-size: 14px;
+        line-height: 0.16rem;
+        margin: 0.04rem 0 0;
+      }
+      strong{
+        display: inline-block;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 0.04rem;
+        float: left;
+      }
+      img{
+        width: 100%;
+      }
+      .basket {
+        background: url(http://www.joyingbike.com/resources/mobile/shop/images/cartClicked.png) center top no-repeat;
+        width: 0.2rem;
+        height: 0.2rem;
+        display: inline-block;
+        background-size: cover;
+        float: right;
+        margin: 0.04rem 0.08rem;
+      }
+    }
+    .infinite-scroll-tips {
+      width: 100%;
+      height: 0.3rem;
+      line-height: 0.4rem;
+      clear: both;
+      color: #cccccc;
+      font-size: 12px;
+      text-align: center;
+      margin-bottom: 0.7rem;
+    }
  }
  .noResult{
     width: 100%;
-    height: 30px;
-    line-height: 40px;
+    height: 0.3rem;
+    line-height: 0.4rem;
     clear: both;
     color: #cccccc;
     font-size: 12px;
     text-align: center;
-    margin-bottom: 60px;
- }
- .noResult img {
-    width: 36%;
-    margin-top: 120px;
- }
- .noResult p {
-    font-size: 16px;
-    color: #999;
- }
- .noResult a {
-    display: inline-block;
-    width: 160px;
-    height: 40px;
-    line-height: 40px;
-    background: #48d2a0;
-    border-radius: 21px;
-    color: #fff;
-    font-size: 16px;
+    margin-bottom: 0.6rem;
+    img {
+      width: 36%;
+      margin-top: 1.2rem;
+    }
+    p {
+      font-size: 16px;
+      color: #999;
+    }
+    a {
+      display: inline-block;
+      width: 1.6rem;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      background: #48d2a0;
+      border-radius: 21px;
+      color: #fff;
+      font-size: 16px;
+    }
  }
 </style>

@@ -8,34 +8,30 @@
                     <li class="price">
                         <div class="leftInfo">零售价</div>
                         <div class="rightInfo">
-                            <strong id="price">￥{{details.price}}</strong>
+                            <strong id="price">￥{{specificationsInfo.price}}</strong>
                         </div>
                     </li>
                 </ul>
                 <div class="action">
                     <div id="specification" class="specification clearfix">
                         <ul>
-                            <template v-for="(specification,i) in specifications">
-                                <li>
-                                    <div class="leftInfo">
-                                        <span :title="specification.name">{{specification.name}}</span>
-                                    </div>
-                                    <div class="rightInfo">
-                                        <template v-for="(entries,index) in specification.entries">
-                                            <a href="javascript:;" v-on:click="alterSpecification" ref="entries" :data-specIndex="i" :data-index="index" :val="entries.id" :class=" (indexNum == index && specIndex == i) || entries.isSelected ? 'selected' : '' ">{{entries.value}}</a>
-                                        </template>
-                                    </div>
-                                </li>
-                            </template>
+                            <li v-for="(specification,i) in specifications">
+                                <div class="leftInfo">
+                                    <span :title="specification.name">{{specification.name}}</span>
+                                </div>
+                                <div class="rightInfo">
+                                    <a href="javascript:;" v-for="(entries,index) in specification.entries" ref="entries" :val="entries.id" :class=" entries.isSelected ? 'selected' : ''" v-on:click="alterSpecification(i, index)">{{entries.value}}</a> 
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <ul>
                         <li class="quantity">
                             <div class="leftInfo">数量</div>
                             <div class="rightInfo num">
-                                <span id="decrease" class="decrease" data-spin="down" onselectstart="return false;">-</span>
-                                <input type="text" id="quantity" name="quantity" value="1" maxlength="4" onpaste="return false;">
-                                <span id="increase" class="increase" data-spin="up" onselectstart="return false;">+</span>
+                                <span id="decrease" class="decrease" @click="changeInitQuantity(0, quantity)">-</span>
+                                <input type="text" id="quantity" name="quantity" :value="quantity" maxlength="4">
+                                <span id="increase" class="increase" @click="changeInitQuantity(1, quantity)">+</span>
                             </div>件
                         </li>
                         <form id="productNotifyForm" action="/product_notify/save" method="post" novalidate="novalidate">
@@ -49,11 +45,11 @@
                         </form>
                         <li class="stock">
                             <div class="leftInfo">库存</div>
-                            <div class="rightInfo" id="stock"><em>{{details.stock}}</em>件</div>
+                            <div class="rightInfo" id="stock"><em>{{specificationsInfo.stock}}</em>件</div>
                         </li>
                         <li class="rewardPoint">
                             <div class="leftInfo">赠送积分</div>
-                            <div class="rightInfo" id="rewardPoint">{{details.price}}</div>
+                            <div class="rightInfo" id="rewardPoint">{{specificationsInfo.price}}</div>
                         </li>
                     </ul>
                 </div>
@@ -104,7 +100,7 @@
                 </li>
             </ul>
 		</div>
-        <fixedFooter></fixedFooter>
+        <fixedFooter :skuId='skuId' :quantity='quantity' :stock='stock'></fixedFooter>
     </div>
 </template>
 
@@ -129,21 +125,25 @@
         name: 'detail',
         data () {
             return {
+                id : 0,
+                memberId: 8,
                 detailImage : detailImage,
                 details: [],
                 imgs: '',
                 specifications: [],
+                specificationsInfo: {},
                 types: [],
                 values: [],
-                isSelected: false,
                 indexNum: 0,
-                specIndex: 0,
-                beforeIndex: 0,
-                beforeSpecIndex: 0,
+                selectedVal: [],
+                disabledCss: false,
+                skuId: null,
+                stock: 0,
+                quantity: 1,
             }
         },
         created: function(){
-            this.findDetail();
+            this.findDetail(); //查找该商品详情
         },
         components: {
             Swiper,
@@ -153,41 +153,113 @@
             
             findDetail: function(){
                 const vm = this;
-                const ids = vm.$route.query.id;
+                vm.id = vm.$route.query.id;
                 vm.axios({
                     type:'GET',
                     url:'http://127.0.0.1:8080/findDetail',
                     params: {
-                        id:ids
+                        id: vm.id
                     }
                 }).then(function(res){
                     const data = res.data[0];
-                    console.log(data);
+                    const indexNum = [], specIndexNum = [];
+                    //console.log(data);
                     vm.details = data;
                     vm.imgs = data.introduction;
                     vm.specifications = eval('('+data.specification+')');
-                    console.log(eval('('+data.specification+')'));
+                    const spec = eval('('+data.specification+')');
+                    
+                    //console.log(eval('('+data.specification+')'));
+                    //console.log(vm.specifications.isSelected.val);
+                    
+                    // 获得页面初始加载的选中项
+                    let selectedVal = [];
+                    for(let x = 0; x < vm.specifications.length; x++){
+                        for(let n = 0; n < vm.specifications[x]["entries"].length; n++){
+                            if(vm.specifications[x]["entries"][n].isSelected == true){
+                                selectedVal.push(vm.specifications[x]["entries"][n].value);
+                            };
+                        }
+                    }
+                    vm.findSkuInfo(selectedVal);
+                    
                 }).catch(function(err){
                     console.log(err);
                 })
             },
-            alterSpecification: function(e){
-                // console.log(e.target);
-                // console.log(e.target.dataset);
-                // console.log(this.$refs.entries);
-                if(e.target.nodeName.toLowerCase() === 'a'){
-                    const i = parseInt(e.target.dataset.index);
-                    const s = parseInt(e.target.dataset.specindex);
-                    this.specIndex= s;
-                    this.indexNum = i;
-                    console.log(i);
-                    console.log(s);
-                    this.beforeIndex
-                    //e.target.isSelected = true;
-                    //this.$refs.entries.setAttribute("class","");
-                    //e.target.setAttribute("class", "selected"); 
+           
+            alterSpecification: function(i, index){
+
+                for(let m = 0; m < this.specifications[i]["entries"].length; m++){
+                    this.specifications[i]["entries"][m].isSelected = false;
                 }
-            }
+                this.specifications[i]["entries"][index].isSelected = true;
+                
+                //获得当前选中项
+                let selectedVal = [];
+                for(let x = 0; x < this.specifications.length; x++){
+                    for(let n = 0; n < this.specifications[x]["entries"].length; n++){
+                        if(this.specifications[x]["entries"][n].isSelected == true){
+                            selectedVal.push(this.specifications[x]["entries"][n].value);
+                        };
+                    }
+                }
+                this.findSkuInfo(selectedVal);
+                this.quantity = 1;
+            },
+            findSkuInfo: function(itemArr){
+                const vm = this;
+                const ids = vm.$route.query.id;
+                vm.axios({
+                    type:'GET',
+                    url:'http://127.0.0.1:8080/findSkuInfo',
+                    params: {
+                        product_id:ids
+                    }
+                }).then(function(res){
+                    //console.log(res.data);
+                    let data = res.data;
+                    vm.specificationsInfo = {};
+                    vm.skuId = null;
+                    //筛选不能选中项
+                    // for(let y = 0; y < data.length; y++){
+                    // } 
+                    
+                    //获取对应属性下的产品信息
+                    for(let k = 0; k < data.length; k++){
+                        let specificationValues = eval('('+data[k].specificationValues+')');
+                        let specArr = [];
+                        
+                        for(let i = 0; i < specificationValues.length; i++){
+                            specArr.push(specificationValues[i].value); 
+                        }
+                        //判断两个数组是否相等
+                        if( specArr.toString()  == itemArr.toString() ){
+                            vm.specificationsInfo = data[k];
+                            vm.skuId = vm.specificationsInfo.id;
+                            vm.stock = vm.specificationsInfo.stock;
+                        }
+                    }
+                    //console.log(vm.skuId);
+                    //console.log(vm.specificationsInfo);
+                }).catch(function(err){
+                    console.log(err);
+                })
+            },
+            changeInitQuantity: function(type, initQuantity){
+                const vm = this;
+                
+                if(type == 0){ // type: 0-减少商品 1-增加商品
+                    if(initQuantity == 1){
+                        alert("已是最小数量，再减就木有啦~")
+                        return false;
+                    }else{
+                        vm.quantity = initQuantity - 1;
+                    }
+                }else if(type == 1){
+                    vm.quantity = initQuantity + 1;
+                }
+            },
         }
     }
 </script>
@@ -196,22 +268,22 @@
     .productDetail{
         overflow: hidden;
         width: 94%;
-        margin: 10px auto 0;
+        margin: 0.1rem auto 0;
         background: #fff;
         box-shadow: 0 3px 8px #ccc;
         border-radius: 4px;
         position: relative;
     }
     .vux-slider{
-        margin: 20px auto;
+        margin: 0.2rem auto;
         width: 92%;
-        height: 300px;
+        height: 3rem;
     }
     .vux-swiper{
-        height: 300px !important;
+        height: 3rem !important;
     }
     .info {
-        padding: 0 10px 10px;
+        padding: 0 0.1rem 0.1rem;
         h1 {
             font-size: 18px;
             color: #333;
@@ -219,8 +291,8 @@
         }
         .price, .exchangePoint {
             border-bottom: 1px solid #dedede;
-            margin-bottom: 10px;
-            line-height: 36px;
+            margin-bottom: 0.1rem;
+            line-height: 0.36rem;
             overflow: hidden;
         }
         .leftInfo {
@@ -231,8 +303,9 @@
             float: left;
         }
         .rightInfo {
-            width: 80%;
             float: right;
+            width: 80%;
+            font-size: initial;
         }
         .price strong, .info .exchangePoint strong {
             color: #f56767;
@@ -240,32 +313,32 @@
         }
         .stock {
             color: #999;
-            line-height: 40px;
+            line-height: 0.4rem;
             overflow: hidden;
         }
         .rewardPoint {
             color: #48d2a0;
-            line-height: 20px;
+            line-height: 0.2rem;
             overflow: hidden;
         }
     }
     .specification ul li {
-        margin-bottom: 8px;
+        margin-bottom: 0.08rem;
         overflow: hidden;
     }
     .specification .leftInfo span {
-        line-height: 30px;
+        line-height: 0.3rem;
     }
     .specification .rightInfo a {
         display: inline-block;
-        height: 30px;
-        line-height: 28px;
+        height: 0.3rem;
+        line-height: 0.28rem;
         text-align: center;
         border-radius: 4px;
         border: 2px solid #eee;
-        padding: 0 10px;
-        margin-right: 10px;
-        margin-bottom: 10px;
+        padding: 0 0.1rem;
+        margin-right: 0.1rem;
+        margin-bottom: 0.1rem;
         color: #666;
         font-size: 14px;
     }
@@ -273,28 +346,32 @@
         border-color: #48d2a0;
         box-shadow: 0 1px 6px rgba(162,238,211,1);
     }
+    .specification .rightInfo .disabled{
+        border: 2px dotted #eee;
+        box-shadow: none;
+    }
     .quantity {
-        height: 28px;
+        height: 0.28rem;
         overflow: hidden;
         font-size: 12px;
-        line-height: 29px;
+        line-height: 0.28rem;
         .leftInfo {
             float: left;
-            line-height: 28px;
+            line-height: 0.28rem;
         }
         .num {
             float: left;
-            width: 84px;
-            height: 24px;
+            width: 0.84rem;
+            height: 0.24rem;
             border: 2px solid #eee;
             border-radius: 18px;
-            line-height: 28px;
-            margin-right: 4px;
+            line-height: 0.28rem;
+            margin-right: 0.1rem;
         }
          .decrease, .increase {
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
+            width: 0.24rem;
+            height: 0.24rem;
+            line-height: 0.24rem;
             text-align: center;
             display: inline-block;
             float: left;
@@ -313,9 +390,9 @@
         }
         input {
             float: left;
-            width: 32px;
-            height: 24px;
-            line-height: 24px;
+            width: 0.32rem;
+            height: 0.24rem;
+            line-height: 0.24rem;
             color: #212121;
             text-align: center;
             ime-mode: disabled;
@@ -326,65 +403,67 @@
     .proIntroduct{
         overflow: hidden;
         width: 94%;
-        margin: 10px auto 0;
+        margin: 0.1rem auto 0;
         background: #fff;
         -webkit-box-shadow: 0 3px 8px #ccc;
         box-shadow: 0 3px 8px #ccc;
         border-radius: 4px;
         position: relative;
         .title{
-            line-height: 35px;
-            padding-left: 10px;
+            line-height: 0.35rem;
+            padding-left: 0.10rem;
             border-bottom: 1px solid #dedede;
             font-size: 16px;
             color: #333;
         }
         img{
             width: 100% !important;
+            vertical-align: top;
         }
     }
     .guess {
         width: 94%;
-        margin: 0 auto 60px;
+        margin: 0 auto 0.6rem;
         overflow: hidden;
         h2 {
             font-size: 16px;
             color: #333;
-            line-height: 34px;
-            margin-left: 6px;
+            line-height: 0.34rem;
+            margin-left: 0.06rem;
         }
         
         li {
             float: left;
             width: 45%;
-            margin: 0px 2% 10px 0;
             background: #fff;
-            padding: 6px;
+            margin: 0px 2% 0.1rem 0;
+            padding: 0.06rem;
             border-radius: 4px;
             box-shadow: 0 2px 8px #ccc;
+            font-size: initial;
             img {
                 width: 100%;
             }
             .guessName {
                 display: block;
                 color: #333;
-                height: 20px;
+                height: 0.2rem;
             }
             .guessPrice {
                 display: inline-block;
                 color: #f56667;
                 font-size: 16px;
                 font-weight: bold;
-                margin-top: 4px;
+                margin-top: 0.04rem;
             }
             .guessJoin {
                 display: inline-block;
                 float: right;
-                width: 20px;
-                height: 20px;
+                width: 0.2rem;
+                height: 0.2rem;
                 background: url(../assets/images/cartClicked.png) center top no-repeat;
                 background-size: cover;
-                margin: 4px 8px;
+                margin: 0.04rem 0.08rem;
             }
         }
         li:nth-child(even) {

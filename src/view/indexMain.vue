@@ -47,76 +47,77 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss">
   .search{
-    padding: 8px 0;
+    padding: 0.08rem 0;
     background: #fff;
-  }
-  .search input{
-    padding: 0px 10px 0 30px;
-    color: #999999;
-    line-height: 26px;
-    border-radius: 13px;
-    height: 25px;
-    width: 86%;
-    margin: 7.5px auto;
-    box-shadow: none;
-    border: none;
-    margin: 0px auto;
-    display: block;
-    background: url(../assets/images/search.png) 6px center no-repeat;
-    background-size: 15px auto;
-    background-color: rgba(72,210,160,0.1);
+    input{
+      padding: 0px 0.1rem 0 0.3rem;
+      color: #999999;
+      line-height: 0.26rem;
+      border-radius: 16px;
+      height: 0.25rem;
+      width: 86%;
+      margin: 0.075rem auto;
+      box-shadow: none;
+      border: none;
+      margin: 0px auto;
+      display: block;
+      background: url(../assets/images/search.png) 0.06rem center no-repeat;
+      background-size: 0.15rem auto;
+      background-color: rgba(72,210,160,0.1);
+    }
   }
   nav{
     overflow: hidden;
     background: #fff;
-    padding-bottom: 10px;
-  }
-  nav a{
-    display: inline-block;
-    width: 33.3%;
-    float: left;
-    font-size: 14px;
-    text-decoration: none;
-    color: #666;
-    text-align: center;
-    line-height: 20px;
-  }
-  nav a img{
-    display: block;
-    width: 60px;
-    height: 60px;
-    margin: 15px auto 0px auto;
+    padding-bottom: 0.1rem;
+    a{
+      display: inline-block;
+      width: 33.3%;
+      float: left;
+      font-size: 14px;
+      text-decoration: none;
+      color: #666;
+      text-align: center;
+      line-height: 0.2rem;
+      img{
+        display: block;
+        width: 0.6rem;
+        height: 0.6rem;
+        margin: 0.15rem auto 0;
+      }
+    }
   }
   .bannerCol{
-    margin: 10px 0;
-  }
-  .bannerCol ul{
-    margin: 0;
-    padding: 0;
-  }
-  .bannerCol h1{
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    font-size: 16px;
-    background: #fff;
-    color: #333;
-    margin: 0;
-  }
-  .bannerCol h1 img{
-    width: 12px;
-    margin-right: 8px;
-    margin-left: 8px;
-    margin-top: -4px;
-  }
-  .bannerCol .adImgs img{
-    width: 100%;
+    margin: 0.1rem 0;
+    ul{
+      margin: 0;
+      padding: 0;
+      h1{
+        height: 0.3rem;
+        line-height: 0.3rem;
+        text-align: center;
+        font-size: 16px;
+        background: #fff;
+        color: #333;
+        margin: 0;
+        img{
+          width: 0.12rem;
+          margin: -0.04rem 0.08rem 0 0.08rem;
+        }
+      }
+      .adImgs{
+        display: block;
+        img{
+          width: 100%;
+        }
+      }
+    }
   }
   .last{
-    line-height: 6px;
-    margin-bottom: 70px;
+    line-height: 0.06rem;
+    margin-bottom: 0.7rem;
     text-align: center;
     color: #666;
     font-size: 14px;
@@ -148,6 +149,16 @@
     },
     components: {
       Swiper
+    },
+    created: function(){
+      this.getCookies();
+    },
+    methods: {
+      getCookies: function(){
+        //console.log(this.getCookie("username"));
+        //console.log(this.cookies.get("username"));
+        
+      }
     }
   }
 </script>
