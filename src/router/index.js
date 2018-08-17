@@ -24,18 +24,13 @@ import Payment from '@/view/payment'
 import CheckoutReceiverList from '@/view/checkout/receiver/list'
 import CheckoutReceiverAdd from '@/view/checkout/receiver/add'
 import CheckoutReceiverModify from '@/view/checkout/receiver/modify'
-//import notFound from '@/view/notFound';
+import notFound from '@/view/notFound';
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'history',
   routes: [
-    // {
-    //   path: '*',
-    //   name:'notFound',
-    //   component: notFound
-    // },
     {
       path: '/',
       name: 'index',
@@ -154,6 +149,13 @@ export default new Router({
       path: '/member/contact',
       name: 'contact',
       component: MemberContact
-    }
+    },
+    // {path: "*", redirect: "/"},
+    // {path: "*", redirect: {name: 'index'}},
+    {
+      path: '*',
+      name:'notFound',
+      component: notFound
+    },
   ]
 })

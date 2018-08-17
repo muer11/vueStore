@@ -108,7 +108,7 @@ export default {
         }
       }).then(function(response){
         console.log(response);
-        if(response.data == 1){
+        if(response.data.errorCode == 1){
           vm.isPswError=false;
           vm.showPasswordError = false;
           vm.isShow = true;
@@ -120,7 +120,7 @@ export default {
           // let user = JSON.parse(Base64.decode(str));
           setTimeout(function(){
             vm.isShow = false;
-            vm.$router.push({path:"/"});
+            vm.$router.push({path:"/"}); // 此处应该改为：返回上一页，若无上一页，则返回首页
           }, 1000);
         }else{
           vm.errPwMsg = "密码错误";
