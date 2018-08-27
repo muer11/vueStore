@@ -4,7 +4,7 @@ import Index from '@/view/index'
 import IndexMain from '@/view/indexMain'
 import List from '@/view/list'
 import Cart from '@/view/cart'
-import User from '@/view/user'
+// import User from '@/view/user'
 import Login from '@/view/member/login'
 import Register from '@/view/member/register'
 import listItem from '@/view/listItem'
@@ -54,16 +54,19 @@ export default new Router({
           name: 'listItem',
           component: listItem
         },{
-          path: 'member',
+          path: '/member',
           name: 'memberIndex',
           component: MemberIndex,
+          meta:{requiresAuth:true}
         }
       ]
-    },{
-      path: '/user',
-      name: 'user',
-      component: User
-    },{
+    }
+    // ,{
+    //   path: '/user',
+    //   name: 'user',
+    //   component: User
+    // }
+    ,{
       path: '/login',
       name: 'login',
       component: Login
@@ -84,25 +87,30 @@ export default new Router({
         {
           path: '/',
           name: 'orderList',
-          component: MemberOrderList
+          component: MemberOrderList,
+          meta:{requiresAuth:true}
         },{
           path: '/pendingPayment',
           name: 'pendingPayment',
-          component: MemberPendingPayment
+          component: MemberPendingPayment,
+          meta:{requiresAuth:true}
         },{
           path: '/pendingShipment',
           name: 'pendingShipment',
-          component: MemberPendingShipment
+          component: MemberPendingShipment,
+          meta:{requiresAuth:true}
         }
       ]
     },{
       path: '/checkout',
       name: 'checkout',
-      component: Checkout
+      component: Checkout,
+      meta:{requiresAuth:true}
     },{
       path: '/payment',
       name: 'payment',
-      component: Payment
+      component: Payment,
+      meta:{requiresAuth:true}
     },
     // {
     //   path: '/member/order/orderList',
@@ -120,31 +128,38 @@ export default new Router({
     {
       path: '/member/receiver/list',
       name: 'receiverList',
-      component: MemberReceiverList
+      component: MemberReceiverList,
+      meta:{requiresAuth:true}
     },{
       path: '/member/receiver/add',
       name: 'receiverAdd',
-      component: MemberReceiverAdd
+      component: MemberReceiverAdd,
+      meta:{requiresAuth:true}
     },{
       path: '/member/receiver/modify',
       name: 'receiverModify',
-      component: MemberReceiverModify
+      component: MemberReceiverModify,
+      meta:{requiresAuth:true}
     },{
       path: '/checkout/receiver/list',
       name: 'checkoutReceiverList',
-      component: CheckoutReceiverList
+      component: CheckoutReceiverList,
+      meta:{requiresAuth:true}
     },{
       path: '/checkout/receiver/add',
       name: 'checkoutReceiverAdd',
-      component: CheckoutReceiverAdd
+      component: CheckoutReceiverAdd,
+      meta:{requiresAuth:true}
     },{
       path: '/checkout/receiver/modify',
       name: 'checkoutReceiverModify',
-      component: CheckoutReceiverModify
+      component: CheckoutReceiverModify,
+      meta:{requiresAuth:true}
     },{
       path: '/member/profile',
       name: 'profile',
-      component: MemberProfile
+      component: MemberProfile,
+      meta:{requiresAuth:true}
     },{
       path: '/member/contact',
       name: 'contact',

@@ -34,6 +34,7 @@ export default {
   name : 'login',
   data() {
     return {
+      userId: null,
       username: '',
       password: '',
       isDisabled: false,
@@ -77,10 +78,12 @@ export default {
           name: username
         }
       }).then(function(res){
-        if(res.data == 1){
+        console.log(res);
+        if(res.data != null){
           vm.showNameError = false;
           vm.isDisabled = false;
-          
+          // vm.userId = res.data;
+          memberId = res.data;
         }else{
           vm.errMsg = "此账号不存在，请先注册后再登录";
           vm.isError = true;
@@ -104,24 +107,25 @@ export default {
       vm.axios.get('http://127.0.0.1:7001/confirmPassword',{
         params: {
           name: username.value,
-          password: password.value
+          password: password.value,
+          // userId: memberId,
         }
       }).then(function(response){
         console.log(response);
-        if(response.data.errorCode == 1){
+        if(response.data.code == 1){
+          let expireDays = 1000 * 60 * 60 ;
           vm.isPswError=false;
           vm.showPasswordError = false;
           vm.isShow = true;
-          console.log(vm);
-          // console.log(vm.cookie.getCookie('token'));
-          // let token = vm.cookie.getCookie('token');
-          // let Base64 = require('js-base64').Base64;
-          // let str = token.split('.')[1];
-          // let user = JSON.parse(Base64.decode(str));
-          setTimeout(function(){
-            vm.isShow = false;
-            vm.$router.push({path:"/"}); // 此处应该改为：返回上一页，若无上一页，则返回首页
-          }, 1000);
+          vm.cookie.setCookie('session', response.data.token, expireDays); //设置Session
+          // this.setCookie('u_uuid',res.errData.u_uuid,expireDays); //设置用户编号
+          let redirect = decodeURIComponent(vm.$route.query.redirect);
+          if(redirect == "undefined") {
+            vm.$router.push('/'); //跳转至首页
+            return;
+          }
+          // vm.$router.go(0); ?? -1会回退到上页，不太符合要求
+          vm.$router.replace({path: decodeURIComponent(vm.$route.query.redirect)}); // 回退至登录前页面
         }else{
           vm.errPwMsg = "密码错误";
           vm.showPasswordError = true;

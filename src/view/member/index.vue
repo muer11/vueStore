@@ -62,7 +62,7 @@
             </ul>
         </main>
         <div class="memberFooter text-center">
-            <a href="/member/logout">退出登录</a>
+            <span class="logout" @click="logout()">退出登录</span>
         </div>
     </div> 
 </template>
@@ -76,7 +76,24 @@ export default {
       }
   },
   methods: {
-
+      logout: function(){
+        const vm = this;
+        vm.cookie.delCookie('session');
+        vm.$router.replace({
+            name: "login",
+            // path: {redirect: decodeURIComponent(vm.$route.query.redirect)} 
+        });
+        // if(decodeURIComponent(vm.$route.query.redirect)) {
+        //     // vm.$router.go(0);
+        //     vm.$router.replace({
+        //         name: 'login',
+        //         path: decodeURIComponent(vm.$route.query.redirect)
+        //     });
+        //     // router.push({path:decodeURIComponent(url)})
+        //   } else {
+        //     vm.$router.push('/'); //跳转用户中心页
+        //   }
+      }
   }
 }
 </script>
@@ -151,7 +168,7 @@ export default {
         }
         .memberFooter{
             text-align: center;
-            a{
+            .logout{
                 display: inline-block;
                 width: 1.5rem;
                 height: 0.3rem;

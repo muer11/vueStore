@@ -11,7 +11,7 @@
          <a href="#" v-bind:class="(isActive == 'cart' ? 'active' : '' )" v-on:click="goto('cart')">购物车</a>
        </li>
        <li>
-         <a href="#" v-bind:class="(isActive == '/login' ? 'active' : '' )" v-on:click="goto('/login')">我的</a>
+         <a href="#" v-bind:class="(isActive == 'member' ? 'active' : '' )" v-on:click="goto('member')">我的</a>
        </li>
      </ul>
    </div>

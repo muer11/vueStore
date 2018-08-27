@@ -60,6 +60,7 @@
 
                 }).catch(function(err){
                     console.log(err);
+                    return ;
                 })
             },
             // 加入购物车
@@ -77,8 +78,8 @@
                 }
                 
                 let isAddCart = await vm.judgeIsAddCart(vm.memberId, skuId);
-                
-                if(isAddCart){
+                console.log(isAddCart);
+                if(isAddCart == true){
                     vm.axios({
                         url: 'http://127.0.0.1:8080/changeInitQuantity',
                         type: 'get',
@@ -94,7 +95,7 @@
                     }).catch(function(err){
                         console.log(err);
                     })
-                }else{
+                }else if(isAddCart == false){
                     vm.axios({
                         url: 'http://127.0.0.1:8080/addCart',
                         type: 'get',
