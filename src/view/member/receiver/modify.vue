@@ -69,7 +69,7 @@ export default {
 		show: function(){
 			const vm = this;
 			vm.axios({
-				url: 'http://127.0.0.1:8080/showReceiver',
+				url: '/showReceiver',
 				type: 'GET',
 				params: {
 					id: vm.receiverId
@@ -91,7 +91,7 @@ export default {
 		modify: function(id){
 			const vm = this;
             vm.axios({
-                url: 'http://127.0.0.1:8080/modifyReceiver',
+                url: '/modifyReceiver',
                 type: 'GET',
                 params: {   
 					id: id,
@@ -114,7 +114,7 @@ export default {
 		deleteReceiver: function(id){
             const vm = this;
             vm.axios({
-                url: 'http://127.0.0.1:8080/deleteReceiver',
+                url: '/deleteReceiver',
                 type: 'GET',
                 params: {   
 					id: id,

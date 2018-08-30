@@ -73,7 +73,7 @@ export default {
       var vm = this;
       vm.axios({ //发送请求
         method: 'GET',
-        url: 'http://127.0.0.1:7001/judgeUser',
+        url: '/judgeUser',
         params: {
           name: username
         }
@@ -82,8 +82,8 @@ export default {
         if(res.data != null){
           vm.showNameError = false;
           vm.isDisabled = false;
-          // vm.userId = res.data;
-          memberId = res.data;
+          vm.userId = res.data;
+          // memberId = res.data;
         }else{
           vm.errMsg = "此账号不存在，请先注册后再登录";
           vm.isError = true;
@@ -104,7 +104,7 @@ export default {
     // 判断用户的密码是否正确
     confirmPassword: function(){
       var vm = this;
-      vm.axios.get('http://127.0.0.1:7001/confirmPassword',{
+      vm.axios.get('/confirmPassword',{
         params: {
           name: username.value,
           password: password.value,
@@ -113,19 +113,23 @@ export default {
       }).then(function(response){
         console.log(response);
         if(response.data.code == 1){
-          let expireDays = 1000 * 60 * 60 ;
-          vm.isPswError=false;
-          vm.showPasswordError = false;
-          vm.isShow = true;
-          vm.cookie.setCookie('session', response.data.token, expireDays); //设置Session
-          // this.setCookie('u_uuid',res.errData.u_uuid,expireDays); //设置用户编号
-          let redirect = decodeURIComponent(vm.$route.query.redirect);
-          if(redirect == "undefined") {
-            vm.$router.push('/'); //跳转至首页
-            return;
-          }
-          // vm.$router.go(0); ?? -1会回退到上页，不太符合要求
-          vm.$router.replace({path: decodeURIComponent(vm.$route.query.redirect)}); // 回退至登录前页面
+          console.log(vm.userId);
+          vm.$store.dispatch('login', {name: username.value, id: vm.userId}).then(()=>{
+            let expireDays = 1000 * 60 * 60 ;
+            vm.isPswError=false;
+            vm.showPasswordError = false;
+            vm.isShow = true;
+            vm.cookie.setCookie('session', response.data.token, expireDays); //设置Session
+            // this.setCookie('u_uuid',res.errData.u_uuid,expireDays); //设置用户编号
+            let redirect = decodeURIComponent(vm.$route.query.redirect);
+            if(redirect == "undefined") {
+              vm.$router.push('/'); //跳转至首页
+              return;
+            }
+            // vm.$router.go(0); ?? -1会回退到上页，不太符合要求
+            vm.$router.replace({path: decodeURIComponent(vm.$route.query.redirect)}); // 回退至登录前页面
+
+          });
         }else{
           vm.errPwMsg = "密码错误";
           vm.showPasswordError = true;
@@ -150,11 +154,10 @@ export default {
     top: 50%;
     left: 50%;
     width: 200px;
-    margin-left: -100px;
-    margin-top: -80px;
+    height: 45px;
+    margin: -80px 0 0 -100px;
     background: #ccc;
     color: #fff;
-    height: 45px;
     text-align: center;
     line-height: 45px;
     font-size: 0.35rem;
@@ -186,10 +189,13 @@ export default {
     color: #666;
     font-size: 14px;
   }
-  .logo img {
+  .logo {
+    padding-top: 80px; 
+    img {
       display: block;
       width: 40%;
-      margin: 60px auto 40px;
+      margin: 0 auto 40px;
+    }
   }
   main {
       padding: 10px;
@@ -197,18 +203,12 @@ export default {
   }
   .form-control {
       width: 70%;
-      display: block;
+      display: flex;
       margin: 0 auto;
-      border: none;
-      padding: 0;
       color: #333;
       font-size: 14px;
       border-bottom: 1px solid #ccc;
       border-radius: 0;
-      box-shadow: none;
-      -webkit-box-shadow: 0 0 0px 1000px white inset;
-      -moz-box-shadow: none;
-      -ms-box-shadow: none;
       padding-left: 6px;
       text-align: left;
       line-height: 34px;

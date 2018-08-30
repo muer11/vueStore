@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="listItem">
     <div id="productCategory">
-      <ul class="productCategory" style="width: 504px; left: 0px;">
+      <ul class="productCategory">
         <template v-for="(tab,index) in tabs">
           <li :class="index == tabs.length-1 ? 'last' : ''">
             <router-link :to="{path: '/listItem?productCategory_id='+(index+1)}" @click.native="getProducts" :class=" (index+1) == liIndex  ? 'clicked' : '' ">{{tab}}</router-link>
@@ -32,77 +32,87 @@
 
 <script>
 export default {
-  name: 'listItem',
-  data(){
+  name: "listItem",
+  data() {
     return {
-      tabs: ["小趣系列", "祺娃娃系列", "费尼斯系列", "大众系列", "电动车系列", "积分商城"],
-      lis:  [],
+      tabs: [
+        "小趣系列",
+        "祺娃娃系列",
+        "费尼斯系列",
+        "大众系列",
+        "电动车系列",
+        "积分商城"
+      ],
+      lis: [],
       clicked: false,
-      liIndex: 0,
-    }
+      liIndex: 0
+    };
   },
-  created: function(){
+  created: function() {
     this.getProducts();
   },
   methods: {
-    getProducts : function(){
+    getProducts: function() {
       var vm = this;
       var productCategory_id = vm.$route.query.productCategory_id;
       vm.liIndex = productCategory_id;
-      vm.axios({
-        method: 'GET',
-        url: 'http://127.0.0.1:7001/findProducts',
-        params:{
-          productCategory_id:productCategory_id
-        }
-      }).then(function(res){
-        vm.lis = res.data;
-      }).catch(function(err){
-        console.log(err);
-      })
+      vm
+        .axios({
+          method: "GET",
+          url: "/findProducts",
+          params: {
+            productCategory_id: productCategory_id
+          }
+        })
+        .then(function(res) {
+          vm.lis = res.data;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
- .red {
-    color: #f56667;
- }
- #productCategory{
+.listItem {
+  #productCategory {
     width: 100%;
     height: 0.4rem;
     overflow: hidden;
     background: #fff;
     position: relative;
-    .productCategory{
+    .productCategory {
       position: absolute;
       margin: 0;
       padding: 0;
       height: 100%;
-      li{
+      li {
         float: left;
         height: 0.4rem;
         line-height: 0.4rem;
         padding: 0 0.1rem;
         background: #fff;
-        a{
+        a {
           display: block;
           color: #666;
           font-size: 14px;
           vertical-align: middle;
         }
-        .clicked{
-            color: #48d2a0 !important;
+        .clicked {
+          color: #48d2a0 !important;
         }
       }
     }
- }
- .listAll {
-   width: 100%;
-   overflow: hidden;
+  }
+  .listAll {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     .col-xs-6 {
-      float: left;
+      display: flex;
+      flex-wrap: wrap;
       width: 40%;
       margin: 0.1rem 2% 0;
       padding: 3%;
@@ -111,32 +121,37 @@ export default {
       -moz-box-shadow: 0 1px 3px #ccc;
       box-shadow: 0 1px 3px #ccc;
       border-radius: 4px;
-      h4{
-        float: left;
-        width: 100%;
+      // overflow: hidden;
+      a {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        img {
+          width: 100%;
+        }
+      }
+      h4 {
         color: #333;
         font-size: 14px;
         line-height: 0.16rem;
         margin: 0.04rem 0 0;
+        white-space: pre-wrap;
+        word-break: break-all;
       }
-      strong{
-        display: inline-block;
+      strong {
+        width: 76%;
+        word-break: break-all;
         font-size: 16px;
         font-weight: bold;
         margin-top: 0.04rem;
-        float: left;
-      }
-      img{
-        width: 100%;
       }
       .basket {
-        background: url(http://www.joyingbike.com/resources/mobile/shop/images/cartClicked.png) center top no-repeat;
         width: 0.2rem;
         height: 0.2rem;
-        display: inline-block;
-        background-size: cover;
-        float: right;
         margin: 0.04rem 0.08rem;
+        background: url(http://www.joyingbike.com/resources/mobile/shop/images/cartClicked.png)
+          center top no-repeat;
+        background-size: cover;
       }
     }
     .infinite-scroll-tips {
@@ -149,8 +164,8 @@ export default {
       text-align: center;
       margin-bottom: 0.7rem;
     }
- }
- .noResult{
+  }
+  .noResult {
     width: 100%;
     height: 0.3rem;
     line-height: 0.4rem;
@@ -177,5 +192,6 @@ export default {
       color: #fff;
       font-size: 16px;
     }
- }
+  }
+}
 </style>

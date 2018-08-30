@@ -25,15 +25,14 @@
   .list{
     padding-bottom: 0.5rem;
     a{
-      display: block;
+      display: flex;
       width: 94%;
-      margin: 12px auto;
+      margin: 0.12rem auto;
       border-radius: 8px;
       box-shadow: 0 3px 8px #ccc;
       overflow: hidden;
     }
     img{
-      display: block;
       width: 100%;
       height: 100%;
     }

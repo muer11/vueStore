@@ -57,7 +57,7 @@ export default {
     name: 'checkout',
     data (){
         return {
-            memberId: 8,
+            // memberId: 8,
             receiverInfo: [],
             skuInfo: [],
             cartItems: [],
@@ -76,7 +76,7 @@ export default {
         payment: function(){
             const vm = this;
             vm.axios({
-                url: "http://127.0.0.1:8080/addOrder",
+                url: "/addOrder",
                 type: "GET",
                 params: {
                     cartItems: vm.cartItems,
@@ -93,10 +93,10 @@ export default {
         findDefaultReceiver: function(){
             const vm = this;
             vm.axios({
-                url: "http://127.0.0.1:8080/selectReceiver",
+                url: "/selectReceiver",
                 type: "GET",
                 params: {
-                    member_id: vm.memberId,
+                    member_id: vm.$store.state.id,
                 }
             }).then(function(res){
                 const data = res.data;
@@ -113,7 +113,7 @@ export default {
         selectSku: function(){
             const vm = this;
             vm.axios({
-                url: "http://127.0.0.1:8080/selectSkus",
+                url: "/selectSkus",
                 type: "GET",
                 params: {
                     //member_id: vm.memberId,

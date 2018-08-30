@@ -67,7 +67,7 @@ export default {
 		addReceiver: function(){
 			const vm = this;
 			vm.axios({
-				url: 'http://127.0.0.1:7001/addReceivers',
+				url: '/addReceivers',
 				type: 'GET',
 				params: {
 					consignee: vm.consignee,

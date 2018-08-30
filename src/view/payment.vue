@@ -60,121 +60,123 @@
 
 <script>
 export default {
-    name: 'payment',
-    data(){
-        return {
-            orderInfo: [],
-        }
-    },
-    created: function(){
-        this.findOrder();
-    },
-    methods: {
-        findOrder: function(){
-            const vm = this;
-            const orderId = vm.$route.query.ordersId;
-            console.log(orderId);
-            vm.axios({
-                url: "http://127.0.0.1:8080/findOrder",
-                params: {
-                    orderId: orderId,
-                },
-            }).then(function(res){
-                console.log(res);
-                vm.orderInfo = res.data[0];
-            }).catch(function(err){
-                console.log(err);
-            })
-        },
+  name: "payment",
+  data() {
+    return {
+      orderInfo: []
+    };
+  },
+  created: function() {
+    this.findOrder();
+  },
+  methods: {
+    findOrder: function() {
+      const vm = this;
+      const orderId = vm.$route.query.ordersId;
+      console.log(orderId);
+      vm
+        .axios({
+          url: "/findOrder",
+          params: {
+            orderId: orderId
+          }
+        })
+        .then(function(res) {
+          console.log(res);
+          vm.orderInfo = res.data[0];
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
     }
-}
+  }
+};
 </script>
 
 <style lang="scss">
-    .payment{
-        font-size: 0.14rem;
-        overflow: hidden;
-        .title{
-            line-height: 40px;
-            text-indent: 0.15rem;
-            color: #666;
-        }
-        .group{
-            line-height: 44px;
-            background: #fff;
-            text-indent: 0.15rem;
-            margin-bottom: 10px;
-            .green{
-                color: #48d2a0;
-                font-size: 0.14rem;
-            }
-            .pull-right{
-                margin-right: 0.15rem;
-
-            }
-            .alerts{
-                display: inline-block;
-                line-height: 23px;
-                text-indent: 0;
-                width: 92%;
-                margin-top: 10px;
-            }
-        }
-        .heading{
-            text-indent: 0.15rem;
-            line-height: 0.28rem;
-            color: #666;
-        }
-        form{
-            .object{
-                background: #fff;
-                padding: 6px 1em;
-                line-height: 34px;
-                img{
-                    float: left;
-                    width: 30px;
-                    height: 30px;
-                    margin-left: 2%;
-                    margin-top: 6px;
-                    overflow: hidden;
-                }
-                em{
-                    float: left;
-                    display: block;
-                    margin-left: 26px;
-                    color: #666;
-                    margin-top: 4px;
-                }
-                span{
-                    display: inline-block;
-                    width: 0.4rem;
-                    height: 0.4rem;
-                    //background: url(../../member/images/noDefault.png);
-                    background-size: 0.4rem 0.4rem;
-                    background-repeat: no-repeat;
-                    margin-left: -0.4rem;
-                }
-                span.active{
-                    //background: url(../../member/images/default.png);
-                    background-size: 0.4rem 0.4rem;
-                    background-repeat: no-repeat;
-                }
-            }
-        }
-        #submit{
-            display: block;
-            height: 100%;
-            color: #fff;
-            font-size: 0.16rem;
-            line-height: 0.5rem;
-            text-align: center;
-            background: #48d2a0;
-            border-radius: 0;
-        }
-        .footer-fixed{
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
+.payment {
+  font-size: 0.14rem;
+  overflow: hidden;
+  .title {
+    line-height: 40px;
+    text-indent: 0.15rem;
+    color: #666;
+  }
+  .group {
+    line-height: 44px;
+    background: #fff;
+    text-indent: 0.15rem;
+    margin-bottom: 10px;
+    .green {
+      color: #48d2a0;
+      font-size: 0.14rem;
     }
+    .pull-right {
+      margin-right: 0.15rem;
+    }
+    .alerts {
+      display: inline-block;
+      line-height: 23px;
+      text-indent: 0;
+      width: 92%;
+      margin-top: 10px;
+    }
+  }
+  .heading {
+    text-indent: 0.15rem;
+    line-height: 0.28rem;
+    color: #666;
+  }
+  form {
+    .object {
+      background: #fff;
+      padding: 6px 1em;
+      line-height: 34px;
+      img {
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-left: 2%;
+        margin-top: 6px;
+        overflow: hidden;
+      }
+      em {
+        float: left;
+        display: block;
+        margin-left: 26px;
+        color: #666;
+        margin-top: 4px;
+      }
+      span {
+        display: inline-block;
+        width: 0.4rem;
+        height: 0.4rem;
+        //background: url(../../member/images/noDefault.png);
+        background-size: 0.4rem 0.4rem;
+        background-repeat: no-repeat;
+        margin-left: -0.4rem;
+      }
+      span.active {
+        //background: url(../../member/images/default.png);
+        background-size: 0.4rem 0.4rem;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  #submit {
+    display: block;
+    height: 100%;
+    color: #fff;
+    font-size: 0.16rem;
+    line-height: 0.5rem;
+    text-align: center;
+    background: #48d2a0;
+    border-radius: 0;
+  }
+  .footer-fixed {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+}
 </style>

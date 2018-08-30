@@ -52,7 +52,7 @@ export default {
 			address: '', //详细地址
 			zipCode: '', //邮编
 			isDefault: 0,
-			memberId: 8, //用户编号
+			// memberId: 8, //用户编号
         }
 	},
 	components: {
@@ -69,7 +69,7 @@ export default {
 		show: function(){
 			const vm = this;
 			vm.axios({
-				url: 'http://127.0.0.1:8080/showReceiver',
+				url: '/showReceiver',
 				type: 'GET',
 				params: {
 					id: vm.receiverId
@@ -91,7 +91,7 @@ export default {
 		modify: function(id){
 			const vm = this;
             vm.axios({
-                url: 'http://127.0.0.1:8080/modifyReceiver',
+                url: '/modifyReceiver',
                 type: 'GET',
                 params: {   
 					id: id,
@@ -116,11 +116,11 @@ export default {
 		deleteReceiver: function(id){
             const vm = this;
             vm.axios({
-                url: 'http://127.0.0.1:8080/deleteReceiver',
+                url: '/deleteReceiver',
                 type: 'GET',
                 params: {   
 					id: id,
-					member_id: vm.memberId,
+					member_id: vm.$store.state.id,
                     isDefault: vm.isDefault,
                 }
             }).then(function(res){

@@ -17,57 +17,57 @@
    </div>
  </template>
 <script>
-export default{
-  name: 'myfooter',
-  data () {
+export default {
+  name: "myfooter",
+  data() {
     return {
-      isActive: '/'
-    }
+      isActive: "/"
+    };
   },
-  created: function(){
+  created: function() {
     //console.log(this.$route);
     let urlParams = this.$route.path;
     this.isActive = urlParams.substr(1);
   },
   methods: {
-    goto: function(msg){
+    goto: function(msg) {
       this.$router.push(msg);
       this.isActive = msg;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-  .footer {
-    width: 100%;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    z-index: 100;
-    background-color: #ffffff;
-    padding: 0.06rem 0 0;
-    border-top: 1px solid #eee;
-    li{
-      list-style: none;
+.footer {
+  width: 100%;
+  padding: 0.06rem 0 0;
+  border-top: 1px solid #eee;
+  background-color: #ffffff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+  .myfooter {
+    display: flex;
+    flex-wrap: nowrap;
+    li {
+      display: flex;
       width: 25%;
-      float: left;
-      text-align: center;
-      font-size: 14px;
-      a{
-        display: inline-block;
+      a {
+        flex: 0 1 100%;
         padding-top: 0.24rem;
         color: #96a7a1;
         font-size: 14px;
+        text-align: center;
         line-height: 0.22rem;
-        text-decoration: none;
       }
-      a.active{
+      a.active {
         color: #48d2a0;
       }
     }
     li:nth-child(1) {
-      a{
+      a {
         background: url(../assets/images/home.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
       }
@@ -76,7 +76,7 @@ export default{
         background-size: 0.24rem 0.24rem;
       }
     }
-    li:nth-child(2){
+    li:nth-child(2) {
       a {
         background: url(../assets/images/list.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
@@ -85,8 +85,8 @@ export default{
         background: url(../assets/images/listClicked.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
       }
-    } 
-    li:nth-child(3){
+    }
+    li:nth-child(3) {
       a {
         background: url(../assets/images/cart.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
@@ -95,8 +95,8 @@ export default{
         background: url(../assets/images/cartClicked.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
       }
-    } 
-    li:nth-child(4){
+    }
+    li:nth-child(4) {
       a {
         background: url(../assets/images/user.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
@@ -105,6 +105,7 @@ export default{
         background: url(../assets/images/userClicked.png) center 0px no-repeat;
         background-size: 0.24rem 0.24rem;
       }
-    } 
+    }
   }
+}
 </style>

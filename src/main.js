@@ -1,7 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import Vuex from 'vuex'
+import store from './store'
 import axios from 'axios'
 import cookie from './util/util';
 import VueAxios from 'vue-axios'
@@ -13,6 +13,9 @@ import router from './router'
 // let cookie = require('./util/util.js');
 //import { provinceAndCityData, regionData, provinceAndCityDataPlus, regionDataPlus, CodeToText, TextToCode } from 'element-china-area-data'
 //import '@/assets/css/common.css' //引入公共样式
+
+// axios请求基础路径
+axios.defaults.baseURL = 'http://127.0.0.1:7001';
 
 Vue.config.productionTip = false;
 Vue.use(Validate);
@@ -92,7 +95,7 @@ axios.interceptors.response.use(
   });
 // Vue.prototype.$http = axios;
 Vue.prototype.cookie = cookie;
-Vue.prototype.memberId = null;
+// Vue.prototype.memberId = null;
 // Vue.use(cookie);
 
-Vue.use(Vuex, VueAxios, axios);
+Vue.use(VueAxios, axios);

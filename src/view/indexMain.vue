@@ -31,15 +31,15 @@
       <ul>
         <li>
           <h1><img src="http://www.joyingbike.com/resources/mobile/shop/images/star.png">经典爆款<img src="http://www.joyingbike.com/resources/mobile/shop/images/star.png"></h1>
-          <a href="http://www.joyingbike.com/product/detail/424" class="adImgs"><img src="http://www.joyingbike.com/resources/mobile/shop/images/banner1.png"></a>
+          <router-link :to="{path: 'http://www.joyingbike.com/product/detail/424'}" class="adImgs"><img src="http://www.joyingbike.com/resources/mobile/shop/images/banner1.png"></router-link>
         </li>
         <li>
           <h1><img src="http://www.joyingbike.com/resources/mobile/shop/images/star.png">经典爆款<img src="http://www.joyingbike.com/resources/mobile/shop/images/star.png"></h1>
-          <a href="http://www.joyingbike.com/product/detail/424" class="adImgs"><img src="http://www.joyingbike.com/resources/mobile/shop/images/banner1.png"></a>
+          <router-link :to="{path: 'http://www.joyingbike.com/product/detail/424'}" class="adImgs"><img src="http://www.joyingbike.com/resources/mobile/shop/images/banner1.png"></router-link>
         </li>
         <li>
           <h1><img src="http://www.joyingbike.com/resources/mobile/shop/images/star.png">经典爆款<img src="http://www.joyingbike.com/resources/mobile/shop/images/star.png"></h1>
-          <a href="http://www.joyingbike.com/product/detail/424" class="adImgs"><img src="http://www.joyingbike.com/resources/mobile/shop/images/banner1.png"></a>
+          <router-link :to="{path: 'http://www.joyingbike.com/product/detail/424'}" class="adImgs"><img src="http://www.joyingbike.com/resources/mobile/shop/images/banner1.png"></router-link>
         </li>
       </ul>
     </div>
@@ -48,117 +48,107 @@
 </template>
 
 <style lang="scss">
-  .search{
+.indexMain {
+  .search {
     padding: 0.08rem 0;
     background: #fff;
-    input{
-      padding: 0px 0.1rem 0 0.3rem;
+    input {
+      display: flex;
+      width: 86%;
+      height: 0.25rem;
       color: #999999;
       line-height: 0.26rem;
       border-radius: 16px;
-      height: 0.25rem;
-      width: 86%;
+      padding: 0px 0.1rem 0 0.3rem;
       margin: 0.075rem auto;
-      box-shadow: none;
-      border: none;
-      margin: 0px auto;
-      display: block;
       background: url(../assets/images/search.png) 0.06rem center no-repeat;
       background-size: 0.15rem auto;
-      background-color: rgba(72,210,160,0.1);
+      background-color: rgba(72, 210, 160, 0.1);
     }
   }
-  nav{
-    overflow: hidden;
+  nav {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     background: #fff;
     padding-bottom: 0.1rem;
-    a{
-      display: inline-block;
-      width: 33.3%;
-      float: left;
+    a {
+      flex: 0 0 33.3%;
       font-size: 14px;
       text-decoration: none;
       color: #666;
       text-align: center;
       line-height: 0.2rem;
-      img{
-        display: block;
+      img {
+        display: flex;
         width: 0.6rem;
         height: 0.6rem;
         margin: 0.15rem auto 0;
       }
     }
   }
-  .bannerCol{
+  .bannerCol {
     margin: 0.1rem 0;
-    ul{
-      margin: 0;
-      padding: 0;
-      h1{
-        height: 0.3rem;
+    li {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      h1 {
         line-height: 0.3rem;
-        text-align: center;
         font-size: 16px;
         background: #fff;
         color: #333;
-        margin: 0;
-        img{
+        display: flex;
+        flex: 0 1 100%;
+        justify-content: center;
+        img {
           width: 0.12rem;
-          margin: -0.04rem 0.08rem 0 0.08rem;
+          height: 0.12rem;
+          align-self: center;
+          margin: 0 0.08rem;
         }
       }
-      .adImgs{
-        display: block;
-        img{
-          width: 100%;
-        }
+      .adImgs img {
+        width: 100%;
+        height: auto;
       }
     }
   }
-  .last{
+  .last {
     line-height: 0.06rem;
     margin-bottom: 0.7rem;
     text-align: center;
     color: #666;
     font-size: 14px;
   }
+}
 </style>
 
 <script>
-  import { Swiper } from 'vux'
-  const bannerList = [
-    {
-      url: '#',
-      img: 'http://www.joyingbike.com/upload/image/index_slider1.png'
-    },
-    {
-      url: '#',
-      img: 'http://www.joyingbike.com/upload/image/index_slider2.png'
-    },
-    {
-      url: '#',
-      img: 'http://www.joyingbike.com/upload/image/index_slider3.png'
-    }
-  ]
-  export default{
-    name: 'indexMain',
-    data () {
-      return {
-        bannerList: bannerList
-      }
-    },
-    components: {
-      Swiper
-    },
-    created: function(){
-      this.getCookies();
-    },
-    methods: {
-      getCookies: function(){
-        //console.log(this.getCookie("username"));
-        //console.log(this.cookies.get("username"));
-        
-      }
-    }
+import { Swiper } from "vux";
+const bannerList = [
+  {
+    url: "#",
+    img: "http://www.joyingbike.com/upload/image/index_slider1.png"
+  },
+  {
+    url: "#",
+    img: "http://www.joyingbike.com/upload/image/index_slider2.png"
+  },
+  {
+    url: "#",
+    img: "http://www.joyingbike.com/upload/image/index_slider3.png"
   }
+];
+export default {
+  name: "indexMain",
+  data() {
+    return {
+      bannerList: bannerList
+    };
+  },
+  components: {
+    Swiper
+  },
+};
 </script>

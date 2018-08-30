@@ -6,7 +6,7 @@
             </div>
             <div class="info">
                 <p class="text-center">普通会员</p>
-                <p class="text-center">muer</p>
+                <p class="text-center">{{currentUser}}</p>
             </div>
         </div>
         <main>
@@ -72,8 +72,11 @@ export default {
   name : 'memberIndex',
   data(){
       return {
-
+          currentUser: '',
       }
+  },
+  mounted: function(){
+      this.currentUser = this.$store.state.user;
   },
   methods: {
       logout: function(){

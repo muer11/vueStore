@@ -37,7 +37,7 @@ export default {
     name: "checkoutrelist",
     data(){
         return {
-            memberId: 8,
+            // memberId: 8,
             relists: [],
             isClicked: false,
         }
@@ -49,9 +49,9 @@ export default {
         showList: function(){
             const vm = this;
             vm.axios({
-                url: 'http://127.0.0.1:8080/selectReceiver',
+                url: '/selectReceiver',
                 params:{
-                    member_id: vm.memberId,
+                    member_id: vm.$store.state.id,
                 },
                 type: 'GET',
             }).then(function(res){
@@ -66,7 +66,7 @@ export default {
         deleteReceiver: function(id, i){
             const vm = this;
             vm.axios({
-                url: 'http://127.0.0.1:8080/deleteReceiver',
+                url: '/deleteReceiver',
                 type: 'GET',
                 params: {   
                     id: id,
@@ -87,7 +87,7 @@ export default {
             if(!vm.relists[i].isDefault.data[0]){
                 const id = vm.relists[i].id;
                 vm.axios({
-                    url: 'http://127.0.0.1:8080/modifyDefault',
+                    url: '/modifyDefault',
                     type: 'GET',
                     params: {   
                         id: id,

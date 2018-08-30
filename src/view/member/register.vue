@@ -108,7 +108,7 @@
 				var vm = this;
 				vm.axios({ //发送请求
 					method: 'GET',
-					url: 'http://127.0.0.1:7001/judgeUser',
+					url: '/judgeUser',
 					params: {
 						name: username
 					}
@@ -128,7 +128,7 @@
 				var vm = this;
 				vm.axios({
 					method: 'GET',
-					url: 'http://127.0.0.1:7001/judgeMobile',
+					url: '/judgeMobile',
 					params: {
 						mobile: mobile
 					}
@@ -148,7 +148,7 @@
 				var vm = this;
 				vm.axios({
 					method: 'POST',
-					url: 'http://127.0.0.1:7001/addUser',
+					url: '/addUser',
 					data: {
 						name: username.value,
 						password: password.value,
